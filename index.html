@@ -1,144 +1,152 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>MAQUINARIAS SEBASTIAN</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
-    }
-    header {
-      text-align: center;
-      padding: 40px 20px;
-      background-color: white;
-    }
-    header img {
-      max-width: 100%;
-      height: auto;
-    }
-    section {
-      padding: 40px 20px;
-      max-width: 1000px;
-      margin: auto;
-      background: #f5f7fa;
-      margin-bottom: 20px;
-      border-radius: 12px;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    ul {
-      font-size: 18px;
-      line-height: 1.6;
-    }
-    .whatsapp {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #25D366;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #f4f4f4;
-      margin-top: 40px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>MAQUINARIAS SEBASTIAN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f5f7fa;
+  color:#333;
+}
+header{
+  background:white;
+  text-align:center;
+  padding:40px 20px;
+}
+header img{
+  max-width:100%;
+  height:auto;
+}
+section{
+  padding:60px 20px;
+}
+.azul{
+  background:#f0f6ff;
+}
+.blanco{
+  background:white;
+}
+h2{
+  text-align:center;
+  margin-bottom:30px;
+}
+.grid{
+  max-width:1100px;
+  margin:auto;
+}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+.card{
+  background:white;
+  border:1px solid #ddd;
+  padding:20px;
+  text-align:center;
+}
+.card a{
+  display:inline-block;
+  margin-top:10px;
+  text-decoration:none;
+  font-weight:bold;
+}
+.whatsapp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:15px 20px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:bold;
+}
+.tiktok{
+  position:fixed;
+  bottom:80px;
+  right:20px;
+  background:black;
+  color:white;
+  padding:14px 18px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:bold;
+}
+footer{
+  background:#f4f4f4;
+  text-align:center;
+  padding:20px;
+}
+</style>
 </head>
+
 <body>
 
-<header style="background-color:white; text-align:center; padding:40px 20px;">
-  <img src="logo.png" alt="Logo Maquinarias Sebastian" style="max-width:100%; height:auto;">
+<header>
+  <img src="logo.png" alt="Maquinarias Sebastian">
 </header>
 
-<section style="background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); color:white; padding:70px 20px;">
-  <div style="max-width:1100px; margin:auto; text-align:center;">
-    <h2 style="font-size:36px; margin-bottom:20px; text-transform:uppercase; letter-spacing:2px;">Bienvenidos</h2>
-    <p style="font-size:19px; line-height:1.7; max-width:900px; margin:auto;">
-      <strong>MAQUINARIAS SEBASTIAN</strong> ofrece soluciones industriales integrales:
-      ventas, montajes y mantenimiento de maquinaria industrial, diseño y fabricación
-      de equipos de control de procesos, repuestos y accesorios.
-      <br><br>
-      Desarrollo de proyectos de instalaciones <strong>electroneumáticas e hidráulicas</strong>
-      para la industria moderna.
+<section class="azul">
+  <div class="grid">
+    <h2>Bienvenidos</h2>
+    <p style="text-align:center; font-size:18px;">
+      Ventas, montajes y mantenimiento de maquinaria industrial.<br>
+      Diseño y fabricación de equipos de control de procesos, repuestos y accesorios.<br>
+      Proyectos electroneumáticos e hidráulicos.
     </p>
   </div>
 </section>
 
-<section style="background:#ffffff; padding:60px 20px;">
-  <h2 style="text-align:center; font-size:32px; margin-bottom:40px;">¿Por qué elegirnos?</h2>
-  <div style="max-width:1100px; margin:auto; display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:30px;">
-
-    <div style="border:1px solid #e0e0e0; padding:30px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.08);">
-      <h3>Experiencia Industrial</h3>
-      <p>Amplia experiencia en el rubro industrial, ofreciendo soluciones confiables y duraderas.</p>
+<section class="blanco">
+  <div class="grid">
+    <h2>¿Por qué elegirnos?</h2>
+    <div class="cards">
+      <div class="card">Experiencia en el sector industrial</div>
+      <div class="card">Soluciones a medida</div>
+      <div class="card">Soporte técnico garantizado</div>
+      <div class="card">Atención en todo el Perú</div>
     </div>
-
-    <div style="border:1px solid #e0e0e0; padding:30px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.08);">
-      <h3>Soluciones a Medida</h3>
-      <p>Diseñamos y fabricamos equipos según las necesidades específicas de cada cliente.</p>
-    </div>
-
-    <div style="border:1px solid #e0e0e0; padding:30px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.08);">
-      <h3>Soporte Técnico</h3>
-      <p>Acompañamiento técnico, mantenimiento y asesoría post‑venta garantizada.</p>
-    </div>
-
-    <div style="border:1px solid #e0e0e0; padding:30px; text-align:center; box-shadow:0 4px 10px rgba(0,0,0,0.08);">
-      <h3>Atención en Todo el Perú</h3>
-      <p>Brindamos atención, envíos y soporte a nivel nacional.</p>
-    </div>
-
   </div>
 </section>
 
-<section>
-  <h2 style="text-align:center; font-size:32px; margin-bottom:30px;">Nuestras Máquinas</h2>
-
-  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:20px;">
-
-    <div style="border:1px solid #ddd; padding:20px; text-align:center; background:white;">
-      <h3>Máquina Industrial A</h3>
-      <p>Alta eficiencia para procesos industriales.</p>
-      <p><strong>Precio:</strong> Consultar</p>
-      <a href="https://wa.me/51981256282?text=Hola%20quiero%20consultar%20por%20la%20Máquina%20Industrial%20A" target="_blank">Consultar</a>
+<section class="azul">
+  <div class="grid">
+    <h2>Nuestras Máquinas</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Máquina Industrial A</h3>
+        <p>Precio: Consultar</p>
+        <a href="https://wa.me/51981256282">Consultar</a>
+      </div>
+      <div class="card">
+        <h3>Máquina Industrial B</h3>
+        <p>Precio: Consultar</p>
+        <a href="https://wa.me/51981256282">Consultar</a>
+      </div>
+      <div class="card">
+        <h3>Máquina Industrial C</h3>
+        <p>Precio: Consultar</p>
+        <a href="https://wa.me/51981256282">Consultar</a>
+      </div>
     </div>
-
-    <div style="border:1px solid #ddd; padding:20px; text-align:center; background:white;">
-      <h3>Máquina Industrial B</h3>
-      <p>Ideal para producción continua.</p>
-      <p><strong>Precio:</strong> Consultar</p>
-      <a href="https://wa.me/51981256282?text=Hola%20quiero%20consultar%20por%20la%20Máquina%20Industrial%20B" target="_blank">Consultar</a>
-    </div>
-
-    <div style="border:1px solid #ddd; padding:20px; text-align:center; background:white;">
-      <h3>Máquina Industrial C</h3>
-      <p>Diseño robusto y duradero.</p>
-      <p><strong>Precio:</strong> Consultar</p>
-      <a href="https://wa.me/51981256282?text=Hola%20quiero%20consultar%20por%20la%20Máquina%20Industrial%20C" target="_blank">Consultar</a>
-    </div>
-
   </div>
 </section>
 
-<section>
-  <h2>Contacto</h2>
-  <p><strong>Correo:</strong> maquinariasmscaltex@gmail.com</p>
-  <p><strong>WhatsApp:</strong> +51 981 256 282</p>
-  <p>Atención y envíos a todo el Perú 🇵🇪</p>
+<section class="blanco">
+  <div class="grid">
+    <h2>Contacto</h2>
+    <p>📧 maquinariasmscaltex@gmail.com</p>
+    <p>📱 +51 981 256 282</p>
+  </div>
 </section>
 
 <a class="whatsapp" href="https://wa.me/51981256282" target="_blank">WhatsApp</a>
+<a class="tiktok" href="https://www.tiktok.com/@maquisebastian" target="_blank">TikTok</a>
 
 <footer>
   © 2026 MAQUINARIAS SEBASTIAN
