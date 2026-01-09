@@ -33,104 +33,128 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* === RESET & BASE === */
 body{
   margin:0;
-  font-family:Arial, sans-serif;
-  background:radial-gradient(circle at top,#0f172a,#020617);
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#0b0f14 url('fondo-industrial.jpg') center/cover fixed no-repeat;
   color:#e5e7eb;
 }
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.75),rgba(0,0,0,.9));
+  z-index:-1;
+}
+
 header{
-  background:linear-gradient(180deg,#ffffff,#e8eef9);
+  background:linear-gradient(180deg,#ffffff,#e5e7eb);
   text-align:center;
-  padding:70px 20px;
-  box-shadow:0 8px 25px rgba(0,0,0,0.25);
+  padding:90px 20px;
+  box-shadow:0 25px 60px rgba(0,0,0,0.45);
 }
 header img{
-  max-width:100%;
-  height:auto;
-  filter:drop-shadow(0 6px 14px rgba(0,0,0,0.35));
+  max-width:420px;
+  filter:drop-shadow(0 12px 30px rgba(0,0,0,.55));
 }
+
 section{
-  padding:80px 20px;
+  padding:100px 20px;
+  position:relative;
 }
-.azul{
-  background:linear-gradient(135deg,#020617,#030712);
+section::after{
+  content:"";
+  position:absolute;
+  bottom:0;left:50%;
+  width:80%;height:1px;
+  background:linear-gradient(90deg,transparent,#374151,transparent);
+  transform:translateX(-50%);
 }
-.blanco{
-  background:linear-gradient(135deg,#020617,#020617);
-}
+
 h2{
   text-align:center;
-  margin-bottom:40px;
-  font-size:32px;
+  margin-bottom:50px;
+  font-size:38px;
+  letter-spacing:2px;
+  text-transform:uppercase;
 }
+
 .grid{
-  max-width:1150px;
+  max-width:1200px;
   margin:auto;
 }
+
 .cards{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:40px;
 }
+
 .card{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  border-radius:22px;
-  padding:35px 25px;
+  background:rgba(15,23,42,.75);
+  backdrop-filter:blur(18px);
+  border-radius:26px;
+  padding:45px 30px;
   text-align:center;
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow:0 20px 40px rgba(0,0,0,0.6);
-  transition:all 0.35s ease;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 30px 80px rgba(0,0,0,.8);
+  transition:transform .45s ease, box-shadow .45s ease;
 }
 .card:hover{
-  transform:translateY(-10px) scale(1.03);
+  transform:translateY(-18px);
+  box-shadow:0 45px 120px rgba(0,0,0,.95);
 }
+
 .card a{
   display:inline-block;
-  margin-top:18px;
-  padding:12px 22px;
-  border-radius:30px;
-  background:#22c55e;
+  margin-top:22px;
+  padding:14px 28px;
+  border-radius:40px;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
   color:#022c22;
   text-decoration:none;
-  font-weight:bold;
+  font-weight:700;
 }
+
 .whatsapp{
   position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#22c55e;
+  bottom:25px;
+  right:25px;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
   color:#022c22;
-  padding:16px 24px;
-  border-radius:50px;
+  padding:18px 30px;
+  border-radius:60px;
   text-decoration:none;
-  font-weight:bold;
-  animation:pulse 1.8s infinite;
+  font-weight:800;
+  box-shadow:0 0 0 rgba(34,197,94,.7);
+  animation:whatsappPulse 2s infinite;
 }
+
 .tiktok{
   position:fixed;
-  bottom:90px;
-  right:20px;
+  bottom:100px;
+  right:25px;
   background:#020617;
   color:#e5e7eb;
-  padding:15px 24px;
-  border-radius:50px;
+  padding:16px 28px;
+  border-radius:60px;
   text-decoration:none;
-  font-weight:bold;
-  animation:pulse 1.8s infinite;
+  font-weight:700;
 }
+
 footer{
   background:#020617;
   text-align:center;
-  padding:25px;
+  padding:30px;
   font-size:14px;
   color:#9ca3af;
 }
-@keyframes pulse{
-  0%{transform:scale(1);} 
-  50%{transform:scale(1.08);} 
-  100%{transform:scale(1);} 
+
+@keyframes whatsappPulse{
+  0%{box-shadow:0 0 0 0 rgba(34,197,94,.6);} 
+  70%{box-shadow:0 0 0 25px rgba(34,197,94,0);} 
+  100%{box-shadow:0 0 0 0 rgba(34,197,94,0);} 
 }
 </style>
 </head>
@@ -145,7 +169,7 @@ footer{
 <section class="azul">
   <div class="grid">
     <h2>Bienvenidos</h2>
-    <p style="text-align:center; font-size:18px;">
+    <p style="text-align:center; font-size:20px; max-width:900px; margin:auto;">
       Ventas, montajes y mantenimiento de maquinaria industrial.<br>
       Diseño y fabricación de equipos de control de procesos, repuestos y accesorios.<br>
       Proyectos electroneumáticos e hidráulicos.
@@ -180,7 +204,7 @@ footer{
     <h2>Nuestras Máquinas</h2>
     <div class="cards">
       <div class="card">
-        <img src="maquina1.png" alt="Máquina Industrial A" style="width:100%; max-width:280px; margin-bottom:15px; border-radius:10px;" loading="lazy">
+        <img src="maquina1.png" alt="Máquina Industrial A" style="width:100%; max-width:300px; margin-bottom:20px; border-radius:14px;" loading="lazy">
         <h3>Máquina Industrial A</h3>
         <p>Precio: Consultar</p>
         <a href="https://wa.me/51981256282?text=Hola,%20deseo%20información%20sobre%20sus%20maquinarias." target="_blank" rel="noopener">Consultar</a>
