@@ -30,278 +30,2027 @@
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
 
-<!-- FUENTE PREMIUM -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- FUENTES PREMIUM -->
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
-:root{
-  --bg:#020617;
-  --panel:#0b1220;
-  --line:#1f2937;
-  --text:#e5e7eb;
-  --muted:#9ca3af;
-  --accent:#22c55e;
+/* ═══════════════════════════════════════════
+   VARIABLES & RESET
+   ═══════════════════════════════════════════ */
+:root {
+  --bg-primary: #04080f;
+  --bg-secondary: #0a1628;
+  --bg-card: #0d1b2a;
+  --bg-card-hover: #112240;
+  --border: rgba(34,197,94,.15);
+  --border-hover: rgba(34,197,94,.5);
+  --text-primary: #e8edf5;
+  --text-secondary: #8b98b0;
+  --text-muted: #5a6a82;
+  --accent: #22c55e;
+  --accent-dark: #16a34a;
+  --accent-light: #4ade80;
+  --accent-glow: rgba(34,197,94,.25);
+  --gold: #f59e0b;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --transition: .4s cubic-bezier(.25,.8,.25,1);
+  --font-heading: 'Rajdhani', sans-serif;
+  --font-body: 'Outfit', sans-serif;
 }
 
-*{box-sizing:border-box}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-  margin:0;
-  font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+a { text-decoration: none; color: inherit; }
+
+/* ═══════════════════════════════════════════
+   BACKGROUND GRID PATTERN
+   ═══════════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
   background:
-    radial-gradient(circle at 10% 15%,rgba(34,197,94,.14),transparent 35%),
-    radial-gradient(circle at 90% 85%,rgba(34,197,94,.10),transparent 40%),
-    radial-gradient(circle at 50% 50%,rgba(255,255,255,.05),transparent 55%),
-    repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0,rgba(255,255,255,.03) 1px,transparent 1px,transparent 120px),
-    linear-gradient(180deg,#020617,#030712,#020617);
-  color:var(--text);
-  letter-spacing:.45px;
-  overflow-x:hidden;
+    linear-gradient(rgba(34,197,94,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,197,94,.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+  z-index: 0;
 }
 
-header{
-  position:relative;
-  padding:160px 20px 150px;
-  text-align:center;
+/* ═══════════════════════════════════════════
+   NAVBAR
+   ═══════════════════════════════════════════ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  padding: 0 40px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(4,8,15,.65);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border-bottom: 1px solid rgba(34,197,94,.08);
+  transition: var(--transition);
+}
+
+.navbar.scrolled {
+  background: rgba(4,8,15,.92);
+  box-shadow: 0 4px 40px rgba(0,0,0,.5);
+}
+
+.nav-brand {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-brand i { font-size: 20px; }
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+}
+
+.nav-links a {
+  padding: 8px 20px;
+  border-radius: 80px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .8px;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--accent);
+  background: rgba(34,197,94,.08);
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px 80px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background:
-    linear-gradient(rgba(255,255,255,.78),rgba(229,231,235,.78)),
-    url('maquinas-bg.jpg') center/cover no-repeat;
+    radial-gradient(ellipse 70% 50% at 50% 40%, rgba(34,197,94,.12), transparent),
+    radial-gradient(circle at 20% 80%, rgba(34,197,94,.06), transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(245,158,11,.04), transparent 50%);
+  pointer-events: none;
 }
 
-header::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at center,rgba(0,0,0,.45),transparent 60%),
-    repeating-linear-gradient(90deg,rgba(0,0,0,.15) 0,rgba(0,0,0,.15) 1px,transparent 1px,transparent 160px);
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-header img{
-  position:relative;
-  z-index:2;
-  max-width:320px;
-  filter:drop-shadow(0 40px 120px rgba(0,0,0,.9));
-  animation:logoCinematic 2.2s cubic-bezier(.2,.8,.2,1) forwards;
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat 8s infinite;
 }
 
-@keyframes logoCinematic{
-  0%{opacity:0;transform:scale(.85) translateY(60px)}
-  60%{opacity:1;transform:scale(1.05) translateY(-10px)}
-  100%{transform:scale(1) translateY(0)}
+@keyframes particleFloat {
+  0% { opacity: 0; transform: translateY(100vh) scale(0); }
+  10% { opacity: .6; }
+  90% { opacity: .6; }
+  100% { opacity: 0; transform: translateY(-20vh) scale(1); }
 }
 
-section{padding:120px 20px;position:relative}
-
-h2{
-  text-align:center;
-  font-size:42px;
-  margin-bottom:70px;
-  letter-spacing:6px;
-  text-transform:uppercase;
-  font-weight:600;
+.hero-logo {
+  position: relative;
+  z-index: 2;
+  max-width: 320px;
+  filter: drop-shadow(0 0 60px rgba(34,197,94,.3));
+  animation: heroLogoIn 1.8s cubic-bezier(.16,1,.3,1) forwards;
+  opacity: 0;
 }
 
-.grid{max-width:1400px;margin:auto;position:relative;z-index:2}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:60px;
+@keyframes heroLogoIn {
+  0% { opacity: 0; transform: scale(.8) translateY(40px); filter: drop-shadow(0 0 0 rgba(34,197,94,0)) blur(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: drop-shadow(0 0 60px rgba(34,197,94,.3)) blur(0); }
 }
 
-.card{
-  background:linear-gradient(180deg,#0b1220,#020617);
-  border:1px solid var(--line);
-  border-radius:30px;
-  padding:55px 45px;
-  text-align:center;
-  box-shadow:0 60px 180px rgba(0,0,0,.9);
-  transition:.4s ease;
+.hero-title {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 700;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  margin-top: 40px;
+  animation: fadeUp 1s .4s both;
 }
 
-.card:hover{transform:translateY(-18px) scale(1.03);border-color:var(--accent)}
+.hero-title span { color: var(--accent); }
 
-.card p{color:var(--muted);line-height:1.9}
-
-.card a{
-  display:inline-block;
-  margin-top:36px;
-  padding:18px 52px;
-  border-radius:80px;
-  background:linear-gradient(135deg,#16a34a,#22c55e,#4ade80);
-  color:#022c22;
-  font-weight:900;
-  text-decoration:none;
-  box-shadow:0 30px 90px rgba(34,197,94,.8);
+.hero-subtitle {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  font-size: clamp(15px, 2vw, 18px);
+  color: var(--text-secondary);
+  margin-top: 20px;
+  line-height: 1.8;
+  animation: fadeUp 1s .7s both;
 }
 
-.whatsapp{
-  position:fixed;
-  bottom:28px;
-  right:28px;
-  padding:22px 50px;
-  background:linear-gradient(135deg,#16a34a,#22c55e,#4ade80);
-  color:#022c22;
-  border-radius:120px;
-  font-weight:900;
-  text-decoration:none;
-  animation:waPulse 2.3s infinite;
-  z-index:2000;
+.hero-cta {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 16px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 1s 1s both;
 }
 
-.tiktok{
-  position:fixed;
-  bottom:110px;
-  right:28px;
-  padding:20px 48px;
-  background:#020617;
-  color:#e5e7eb;
-  border-radius:120px;
-  text-decoration:none;
-  font-weight:800;
-  z-index:2000;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-footer{background:#020617;text-align:center;padding:70px;font-size:13px;color:#9ca3af;letter-spacing:2px}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  border-radius: 80px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+}
 
-@keyframes waPulse{
-  0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}
-  70%{box-shadow:0 0 0 45px rgba(34,197,94,0)}
-  100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  color: #022c22;
+  box-shadow: 0 8px 40px rgba(34,197,94,.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 60px rgba(34,197,94,.5);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-hover);
+}
+
+.btn-outline:hover {
+  background: rgba(34,197,94,.08);
+  transform: translateY(-3px);
+}
+
+/* Hero scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  animation: fadeUp 1s 1.5s both;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: .3; }
+  50% { opacity: 1; }
+}
+
+/* ═══════════════════════════════════════════
+   STATS BAR
+   ═══════════════════════════════════════════ */
+.stats-bar {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1100px;
+  margin: -60px auto 0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 20px 80px rgba(0,0,0,.5);
+}
+
+.stat-item {
+  padding: 40px 24px;
+  text-align: center;
+  position: relative;
+}
+
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background: var(--border);
+}
+
+.stat-number {
+  font-family: var(--font-heading);
+  font-size: 42px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.stat-label {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════
+   SECTIONS COMMON
+   ═══════════════════════════════════════════ */
+.section {
+  position: relative;
+  padding: 140px 24px;
+  z-index: 1;
+}
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  padding: 6px 20px;
+  border: 1px solid rgba(34,197,94,.2);
+  border-radius: 80px;
+  background: rgba(34,197,94,.05);
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(32px, 4vw, 50px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  max-width: 640px;
+  margin: 16px auto 0;
+  font-size: 16px;
+  color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════════════
+   SERVICIOS
+   ═══════════════════════════════════════════ */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.service-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 48px 36px;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-hover);
+  background: var(--bg-card-hover);
+  box-shadow: 0 24px 80px rgba(0,0,0,.4), 0 0 40px var(--accent-glow);
+}
+
+.service-card:hover::before { opacity: 1; }
+
+.service-icon {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.15);
+  font-size: 28px;
+  color: var(--accent);
+  transition: var(--transition);
+}
+
+.service-card:hover .service-icon {
+  background: rgba(34,197,94,.15);
+  transform: scale(1.1);
+}
+
+.service-card h3 {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.service-card p {
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  line-height: 1.8;
+}
+
+/* ═══════════════════════════════════════════
+   POR QUÉ ELEGIRNOS
+   ═══════════════════════════════════════════ */
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.why-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 44px 36px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.why-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.why-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-hover);
+  box-shadow: 0 20px 60px rgba(0,0,0,.35), 0 0 30px var(--accent-glow);
+}
+
+.why-card:hover::after { opacity: 1; }
+
+.why-card-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.why-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.why-card:hover .why-icon {
+  background: rgba(34,197,94,.18);
+  transform: scale(1.08);
+}
+
+.why-card h3 {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: .5px;
+}
+
+.why-card p {
+  color: var(--text-secondary);
+  font-size: 14.5px;
+  line-height: 1.85;
+}
+
+.why-card ul {
+  list-style: none;
+  margin-top: 14px;
+}
+
+.why-card ul li {
+  padding: 5px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.why-card ul li i {
+  color: var(--accent);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Big CTA banner */
+.why-cta-banner {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, rgba(34,197,94,.08), rgba(34,197,94,.03));
+  border: 1px solid rgba(34,197,94,.25);
+  border-radius: var(--radius-lg);
+  padding: 48px 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.why-cta-text h3 {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.why-cta-text p {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+/* ═══════════════════════════════════════════
+   SOBRE MÍ
+   ═══════════════════════════════════════════ */
+.about-grid {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.about-image-wrapper {
+  position: relative;
+}
+
+.about-image-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: calc(var(--radius-lg) + 8px);
+  background: linear-gradient(135deg, var(--accent), transparent 60%);
+  opacity: .2;
+  z-index: 0;
+}
+
+.about-image {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+  aspect-ratio: 4/5;
+  object-fit: cover;
+}
+
+.about-content h3 {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.about-role {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.about-content p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  margin-bottom: 16px;
+  line-height: 1.85;
+}
+
+.about-highlights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 32px;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.highlight-item i {
+  color: var(--accent);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.about-tagline {
+  margin-top: 36px;
+  padding: 20px 28px;
+  background: rgba(34,197,94,.06);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--accent-light);
+}
+
+/* ═══════════════════════════════════════════
+   MÁQUINAS
+   ═══════════════════════════════════════════ */
+.machines-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.machine-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.machine-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--border-hover);
+  box-shadow: 0 24px 80px rgba(0,0,0,.4), 0 0 30px var(--accent-glow);
+}
+
+.machine-img-wrapper {
+  position: relative;
+  height: 240px;
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.machine-img-wrapper img {
+  max-height: 200px;
+  max-width: 90%;
+  object-fit: contain;
+  transition: var(--transition);
+}
+
+.machine-card:hover .machine-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.machine-img-placeholder {
+  font-size: 64px;
+  color: var(--text-muted);
+  opacity: .3;
+}
+
+.machine-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 5px 14px;
+  background: rgba(34,197,94,.15);
+  border: 1px solid rgba(34,197,94,.3);
+  border-radius: 80px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.machine-body {
+  padding: 32px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.machine-body h3 {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: .5px;
+}
+
+.machine-features {
+  list-style: none;
+  margin-bottom: 28px;
+  flex: 1;
+}
+
+.machine-features li {
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.machine-features li i {
+  color: var(--accent);
+  margin-top: 4px;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.machine-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.2);
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+
+.machine-cta:hover {
+  background: var(--accent);
+  color: #022c22;
+  border-color: var(--accent);
+}
+
+/* ═══════════════════════════════════════════
+   CONTACTO
+   ═══════════════════════════════════════════ */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.contact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 44px 36px;
+  transition: var(--transition);
+}
+
+.contact-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 12px 40px rgba(0,0,0,.3);
+}
+
+.contact-card h3 {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-card h3 i { color: var(--accent); }
+
+.contact-info-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.contact-info-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(34,197,94,.08);
+  border: 1px solid rgba(34,197,94,.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.contact-info-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.contact-info-value {
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+/* Google Map */
+.contact-map-wrapper {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.contact-map-wrapper iframe {
+  display: block;
+  width: 100%;
+  height: 280px;
+  border: 0;
+  filter: invert(.92) hue-rotate(180deg) brightness(1.05) contrast(1.1) saturate(.3);
+}
+
+.contact-socials {
+  display: flex;
+  gap: 12px;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+.social-btn.wa {
+  background: rgba(37,211,102,.1);
+  border: 1px solid rgba(37,211,102,.25);
+  color: #25d366;
+}
+.social-btn.wa:hover { background: #25d366; color: #fff; }
+
+.social-btn.tk {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--text-primary);
+}
+.social-btn.tk:hover { background: rgba(255,255,255,.12); }
+
+/* ═══════════════════════════════════════════
+   FORMULARIO DE CONTACTO
+   ═══════════════════════════════════════════ */
+.form-card {
+  grid-column: 1 / -1;
+}
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.form-group label span {
+  color: var(--accent);
+}
+
+.form-input {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  transition: var(--transition);
+  outline: none;
+}
+
+.form-input::placeholder {
+  color: var(--text-muted);
+}
+
+.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(34,197,94,.12);
+}
+
+.form-input.error {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,.12);
+}
+
+textarea.form-input {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.form-error {
+  font-size: 12px;
+  color: #ef4444;
+  display: none;
+}
+
+.form-error.show {
+  display: block;
+}
+
+.form-submit-row {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.form-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 48px;
+  border-radius: 80px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  color: #022c22;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 8px 40px rgba(34,197,94,.3);
+}
+
+.form-submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 60px rgba(34,197,94,.45);
+}
+
+.form-submit-btn:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.form-hint i { color: var(--accent); }
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(40px);
+  padding: 18px 36px;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all .4s cubic-bezier(.25,.8,.25,1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.toast.success {
+  background: #022c22;
+  color: var(--accent);
+  border: 1px solid rgba(34,197,94,.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+
+.toast.error-toast {
+  background: #2d0a0a;
+  color: #ef4444;
+  border: 1px solid rgba(239,68,68,.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+
+/* ═══════════════════════════════════════════
+   FLOATING WHATSAPP
+   ═══════════════════════════════════════════ */
+.float-wa {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 8000;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #25d366;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 28px;
+  box-shadow: 0 6px 30px rgba(37,211,102,.45);
+  transition: var(--transition);
+  animation: waPulse 2.5s infinite;
+}
+
+.float-wa:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 50px rgba(37,211,102,.6);
+}
+
+@keyframes waPulse {
+  0% { box-shadow: 0 6px 30px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,.4); }
+  70% { box-shadow: 0 6px 30px rgba(37,211,102,.45), 0 0 0 20px rgba(37,211,102,0); }
+  100% { box-shadow: 0 6px 30px rgba(37,211,102,.45), 0 0 0 0 rgba(37,211,102,0); }
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+.footer {
+  position: relative;
+  padding: 60px 24px 40px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.footer-brand {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+.footer-copy {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+}
+
+/* ═══════════════════════════════════════════
+   REVEAL ANIMATIONS
+   ═══════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity .8s cubic-bezier(.25,.8,.25,1), transform .8s cubic-bezier(.25,.8,.25,1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: .1s; }
+.reveal-delay-2 { transition-delay: .2s; }
+.reveal-delay-3 { transition-delay: .3s; }
+.reveal-delay-4 { transition-delay: .4s; }
+.reveal-delay-5 { transition-delay: .5s; }
+
+/* ═══════════════════════════════════════════
+   SECTION DIVIDER
+   ═══════════════════════════════════════════ */
+.section-divider {
+  height: 1px;
+  max-width: 200px;
+  margin: 0 auto;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: .3;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .services-grid, .machines-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-image { max-width: 400px; margin: 0 auto; }
+  .why-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .navbar { padding: 0 20px; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: rgba(4,8,15,.96);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    flex-direction: column;
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-links.open { display: flex; }
+  .nav-toggle { display: block; }
+
+  .stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+    margin: -40px 16px 0;
+  }
+
+  .stat-item:nth-child(2)::after { display: none; }
+
+  .services-grid,
+  .machines-grid { grid-template-columns: 1fr; }
+
+  .contact-layout { grid-template-columns: 1fr; }
+  .form-card { grid-column: auto; }
+  .contact-form { grid-template-columns: 1fr; }
+  .form-group.full-width { grid-column: auto; }
+  .form-submit-row { grid-column: auto; }
+
+  .section { padding: 100px 20px; }
+
+  .hero { padding: 120px 20px 100px; }
+  .hero-logo { max-width: 240px; }
+
+  .about-highlights { grid-template-columns: 1fr; }
+
+  .why-cta-banner { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .stats-bar { grid-template-columns: 1fr; margin: -30px 12px 0; }
+  .stat-item::after { display: none !important; }
+  .stat-item { padding: 24px 20px; border-bottom: 1px solid var(--border); }
+  .stat-item:last-child { border-bottom: none; }
+  .hero-cta { flex-direction: column; align-items: center; }
+  .btn { width: 100%; justify-content: center; }
+  .contact-socials { flex-direction: column; }
+}
+
+/* ═══════════════════════════════════════════
+   HIDDEN SEO H1
+   ═══════════════════════════════════════════ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
 }
 </style>
 </head>
 <body>
 
-<h1 style="position:absolute;left:-9999px;">Venta y Mantenimiento de Maquinaria Industrial en Perú</h1>
+<h1 class="sr-only">Venta y Mantenimiento de Maquinaria Industrial en Perú</h1>
 
-<header>
-  <img src="logo.png" alt="Maquinarias Sebastian - Maquinaria Industrial en Perú" loading="lazy">
-</header>
+<!-- ═══ NAVBAR ═══ -->
+<nav class="navbar" id="navbar">
+  <a href="#hero" class="nav-brand">
+    <i class="fas fa-industry"></i> Maquinarias Sebastian
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+    <i class="fas fa-bars"></i>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#elegirnos">Nosotros</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#maquinas">Máquinas</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="btn btn-primary" style="padding:10px 28px;font-size:13px;">
+      <i class="fab fa-whatsapp"></i> Cotizar
+    </a></li>
+  </ul>
+</nav>
 
-<section>
-  <div class="grid">
-    <h2>Bienvenidos</h2>
-    <p style="text-align:center; max-width:900px; margin:auto; font-size:18px;">
-      Ventas, montajes y mantenimiento de maquinaria industrial.<br>
-      Diseño y fabricación de equipos de control de procesos, repuestos y accesorios.<br>
-      Proyectos electroneumáticos e hidráulicos.
-    </p>
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="hero">
+  <div class="hero-particles" id="heroParticles"></div>
+
+  <img src="logo.png" alt="Maquinarias Sebastian - Maquinaria Industrial en Perú" class="hero-logo" loading="lazy">
+
+  <h2 class="hero-title">Ingeniería Aplicada <span>a Tu Negocio</span></h2>
+
+  <p class="hero-subtitle">
+    Venta, montaje y mantenimiento de maquinaria industrial en Perú. Diseño, fabricación de equipos de control de procesos y proyectos electroneumáticos e hidráulicos.
+  </p>
+
+  <div class="hero-cta">
+    <a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="btn btn-primary">
+      <i class="fab fa-whatsapp"></i> Solicitar Cotización
+    </a>
+    <a href="#maquinas" class="btn btn-outline">
+      <i class="fas fa-cogs"></i> Ver Máquinas
+    </a>
+  </div>
+
+  <div class="scroll-indicator">
+    <span>Explorar</span>
+    <div class="scroll-line"></div>
   </div>
 </section>
 
-<section>
-  <div class="grid">
-    <h2>Sobre mí</h2>
+<!-- ═══ STATS BAR ═══ -->
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <div class="stat-number" data-target="10">0</div>
+    <div class="stat-label">Años de experiencia</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="150">0</div>
+    <div class="stat-label">Proyectos realizados</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="80">0</div>
+    <div class="stat-label">Clientes satisfechos</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-number" data-target="100">0</div>
+    <div class="stat-label">Mantenimientos</div>
+  </div>
+</div>
 
-    <div class="card" style="
-      display:grid;
-      grid-template-columns:1fr 1.2fr;
-      gap:50px;
-      align-items:center;
-    ">
+<!-- ═══ SERVICIOS ═══ -->
+<section class="section" id="servicios">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-tag"><i class="fas fa-bolt"></i> Lo que hacemos</div>
+      <h2 class="section-title">Nuestros Servicios</h2>
+      <p class="section-subtitle">Soluciones integrales de ingeniería industrial adaptadas a las necesidades reales de tu producción.</p>
+    </div>
 
-      <img src="ingeniero.jpg" alt="Ingeniero Mecánico Maquinarias Sebastian"
-           style="
-           width:100%;
-           border-radius:22px;
-           box-shadow:0 30px 80px rgba(0,0,0,.8);
-           " loading="lazy">
+    <div class="services-grid">
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon"><i class="fas fa-cogs"></i></div>
+        <h3>Maquinaria Industrial</h3>
+        <p>Venta, instalación y puesta en marcha de maquinaria industrial de alta precisión para líneas de producción continua.</p>
+      </div>
 
-      <div style="text-align:left">
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon"><i class="fas fa-wrench"></i></div>
+        <h3>Mantenimiento</h3>
+        <p>Mantenimiento preventivo y correctivo de equipos industriales, asegurando la máxima disponibilidad operativa.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon"><i class="fas fa-drafting-compass"></i></div>
+        <h3>Diseño & Fabricación</h3>
+        <p>Diseño y fabricación de equipos de control de procesos, repuestos y accesorios a medida para la industria.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-1">
+        <div class="service-icon"><i class="fas fa-project-diagram"></i></div>
+        <h3>Electroneumática</h3>
+        <p>Desarrollo de proyectos electroneumáticos integrando automatización y control preciso en procesos productivos.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-2">
+        <div class="service-icon"><i class="fas fa-water"></i></div>
+        <h3>Hidráulica</h3>
+        <p>Sistemas y proyectos hidráulicos diseñados para operaciones industriales de alto rendimiento y fiabilidad.</p>
+      </div>
+
+      <div class="service-card reveal reveal-delay-3">
+        <div class="service-icon"><i class="fas fa-tools"></i></div>
+        <h3>Montaje Industrial</h3>
+        <p>Montaje profesional de maquinaria y equipos con supervisión técnica especializada en cada fase.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ POR QUÉ ELEGIRNOS ═══ -->
+<section class="section" id="elegirnos">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-tag"><i class="fas fa-trophy"></i> Nuestra diferencia</div>
+      <h2 class="section-title">¿Por Qué Elegirnos?</h2>
+      <p class="section-subtitle">No somos una empresa más. Somos tu aliado estratégico en ingeniería industrial con resultados comprobados.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-card-header">
+          <div class="why-icon"><i class="fas fa-hard-hat"></i></div>
+          <h3>Experiencia Real en Campo</h3>
+        </div>
+        <p>No trabajamos desde un escritorio. Nuestro ingeniero participa directamente en cada montaje, calibración y puesta en marcha. Conocemos los problemas reales de planta porque los resolvemos todos los días.</p>
+        <ul>
+          <li><i class="fas fa-check"></i> Más de 10 años en el sector industrial peruano</li>
+          <li><i class="fas fa-check"></i> Presencia directa en obra y supervisión técnica</li>
+          <li><i class="fas fa-check"></i> Más de 150 proyectos ejecutados con éxito</li>
+        </ul>
+      </div>
+
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-card-header">
+          <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>Garantía y Respaldo Técnico</h3>
+        </div>
+        <p>Cada máquina que vendemos o fabricamos lleva nuestra garantía de funcionamiento. No te dejamos solo después de la venta: ofrecemos soporte continuo porque tu producción no puede parar.</p>
+        <ul>
+          <li><i class="fas fa-check"></i> Garantía real en cada equipo y servicio</li>
+          <li><i class="fas fa-check"></i> Soporte técnico post-venta inmediato</li>
+          <li><i class="fas fa-check"></i> Repuestos originales y compatibles disponibles</li>
+        </ul>
+      </div>
+
+      <div class="why-card reveal reveal-delay-3">
+        <div class="why-card-header">
+          <div class="why-icon"><i class="fas fa-coins"></i></div>
+          <h3>Precio Justo, Sin Sorpresas</h3>
+        </div>
+        <p>Trabajamos con precios transparentes y competitivos. No inflamos cotizaciones ni cobramos extras escondidos. Sabes exactamente cuánto pagas y qué recibes desde el primer día.</p>
+        <ul>
+          <li><i class="fas fa-check"></i> Cotizaciones detalladas sin costo</li>
+          <li><i class="fas fa-check"></i> Precios competitivos del mercado peruano</li>
+          <li><i class="fas fa-check"></i> Financiamiento flexible según tu proyecto</li>
+        </ul>
+      </div>
+
+      <div class="why-card reveal reveal-delay-4">
+        <div class="why-card-header">
+          <div class="why-icon"><i class="fas fa-rocket"></i></div>
+          <h3>Soluciones a tu Medida</h3>
+        </div>
+        <p>Tu negocio no es igual a ningún otro, y tus máquinas tampoco deberían serlo. Diseñamos, adaptamos y fabricamos equipos que se ajustan exactamente a tu proceso productivo.</p>
+        <ul>
+          <li><i class="fas fa-check"></i> Maquinaria personalizada para tu industria</li>
+          <li><i class="fas fa-check"></i> Adaptación de equipos existentes</li>
+          <li><i class="fas fa-check"></i> Asesoría técnica sin compromiso</li>
+        </ul>
+      </div>
+
+      <!-- CTA BANNER -->
+      <div class="why-cta-banner reveal reveal-delay-5">
+        <div class="why-cta-text">
+          <h3>¿Listo para potenciar tu producción?</h3>
+          <p>Conversemos sobre tu proyecto. La asesoría inicial es completamente gratuita y sin compromiso.</p>
+        </div>
+        <a href="https://wa.me/51981256282?text=Hola%2C%20vi%20su%20página%20web%20y%20me%20interesa%20una%20cotización." target="_blank" rel="noopener" class="btn btn-primary">
+          <i class="fab fa-whatsapp"></i> Asesoría Gratuita
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ SOBRE MÍ ═══ -->
+<section class="section" id="sobre-mi">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-tag"><i class="fas fa-user-tie"></i> Quién soy</div>
+      <h2 class="section-title">Sobre Mí</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-image-wrapper reveal">
+        <img src="ingeniero.jpg" alt="Jesús Valencia Solís - Ingeniero Mecánico" class="about-image" loading="lazy">
+      </div>
+
+      <div class="about-content reveal reveal-delay-2">
+        <h3>Jesús Valencia Solís</h3>
+        <div class="about-role">Ingeniero Mecánico</div>
+
         <p>
-          <strong>Jesús Valencia Solís</strong> es Ingeniero Mecánico con experiencia en
-          diseño, fabricación y mantenimiento de maquinaria industrial, orientado a
-          soluciones técnicas eficientes y adaptadas a procesos productivos reales.
+          Profesional con amplia experiencia en diseño, fabricación y mantenimiento de maquinaria industrial, orientado a soluciones técnicas eficientes y adaptadas a procesos productivos reales.
         </p>
 
         <p>
-          Especialista en maquinaria automática, sistemas de corte por cuchilla,
-          proyectos electromecánicos, electroneumáticos e hidráulicos, participando
-          directamente en montaje, puesta en marcha y soporte técnico.
+          Especialista en maquinaria automática, sistemas de corte por cuchilla, proyectos electromecánicos, electroneumáticos e hidráulicos, participando directamente en montaje, puesta en marcha y soporte técnico.
         </p>
 
         <p>
-          Enfoque técnico–empresarial basado en seguridad operativa, durabilidad de
-          equipos, eficiencia productiva y atención personalizada.
+          Enfoque técnico-empresarial basado en seguridad operativa, durabilidad de equipos, eficiencia productiva y atención personalizada.
         </p>
 
-        <div style="
-          margin-top:26px;
-          font-weight:800;
-          letter-spacing:3px;
-          color:#22c55e;
-        ">
-          INGENIERÍA APLICADA A TU NEGOCIO
+        <div class="about-highlights">
+          <div class="highlight-item"><i class="fas fa-check-circle"></i> Maquinaria automática</div>
+          <div class="highlight-item"><i class="fas fa-check-circle"></i> Sistemas de corte</div>
+          <div class="highlight-item"><i class="fas fa-check-circle"></i> Electroneumática</div>
+          <div class="highlight-item"><i class="fas fa-check-circle"></i> Hidráulica industrial</div>
+          <div class="highlight-item"><i class="fas fa-check-circle"></i> Montaje y puesta en marcha</div>
+          <div class="highlight-item"><i class="fas fa-check-circle"></i> Soporte técnico</div>
+        </div>
+
+        <div class="about-tagline">INGENIERÍA APLICADA A TU NEGOCIO</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ MÁQUINAS ═══ -->
+<section class="section" id="maquinas">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-tag"><i class="fas fa-industry"></i> Nuestro catálogo</div>
+      <h2 class="section-title">Nuestras Máquinas</h2>
+      <p class="section-subtitle">Equipos industriales de alta calidad, diseñados para la productividad y la durabilidad.</p>
+    </div>
+
+    <div class="machines-grid">
+      <!-- MAQUINA 1 -->
+      <div class="machine-card reveal reveal-delay-1">
+        <div class="machine-img-wrapper">
+          <img src="maquina1.png" alt="Máquina Automática con corte cuchilla 4ta Generación" loading="lazy">
+          <div class="machine-badge">4ta Generación</div>
+        </div>
+        <div class="machine-body">
+          <h3>Máquina Automática con Corte Cuchilla 4ta Generación</h3>
+          <ul class="machine-features">
+            <li><i class="fas fa-check"></i> Corte por cuchilla de 4ta generación</li>
+            <li><i class="fas fa-check"></i> Alta velocidad y estabilidad operativa</li>
+            <li><i class="fas fa-check"></i> Reducción de desperdicio de material</li>
+            <li><i class="fas fa-check"></i> Construcción robusta para trabajo industrial</li>
+          </ul>
+          <a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="machine-cta">
+            <i class="fab fa-whatsapp"></i> Consultar Precio
+          </a>
         </div>
       </div>
 
-    </div>
-  </div>
-</section>
-
-
-<section>
-  <div class="grid">
-    <h2>Nuestras Máquinas</h2>
-    <div class="cards">
-      <div class="card">
-        <img src="maquina1.png" alt="Máquina Industrial A" style="width:100%; max-width:240px; margin-bottom:20px; border-radius:14px;" loading="lazy">
-        <h3>Máquina Automática con corte cuchilla 4ta Generación</h3>
-        <p>
-          Sistema automático de alta precisión diseñado para procesos industriales continuos.<br>
-          ✔ Corte por cuchilla de 4ta generación<br>
-          ✔ Alta velocidad y estabilidad operativa<br>
-          ✔ Reducción de desperdicio de material<br>
-          ✔ Construcción robusta para trabajo industrial
-        </p>
-        <a href="https://wa.me/51981256282" target="_blank" rel="noopener">Consultar</a>
+      <!-- MAQUINA 2 -->
+      <div class="machine-card reveal reveal-delay-2">
+        <div class="machine-img-wrapper">
+          <img src="maquinaB.png" alt="Máquina Automática con corte cuchilla" loading="lazy">
+          <div class="machine-badge">Disponible</div>
+        </div>
+        <div class="machine-body">
+          <h3>Máquina Automática con Corte Cuchilla</h3>
+          <ul class="machine-features">
+            <li><i class="fas fa-check"></i> Sistema de corte de alta eficiencia</li>
+            <li><i class="fas fa-check"></i> Operación continua y segura</li>
+            <li><i class="fas fa-check"></i> Fácil mantenimiento</li>
+            <li><i class="fas fa-check"></i> Ideal para producción industrial constante</li>
+          </ul>
+          <a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="machine-cta">
+            <i class="fab fa-whatsapp"></i> Consultar Precio
+          </a>
+        </div>
       </div>
-      <div class="card">
-        <img src="maquinaB.png" alt="Máquina Industrial B" style="width:100%; max-width:260px; margin-bottom:22px; border-radius:14px;" loading="lazy">
-        <h3>Máquina Automática con corte cuchilla</h3>
-        <p>
-          Equipo automático confiable para líneas de producción industrial.<br>
-          ✔ Sistema de corte por cuchilla de alta eficiencia<br>
-          ✔ Operación continua y segura<br>
-          ✔ Fácil mantenimiento<br>
-          ✔ Ideal para producción industrial constante
-        </p>
-        <a href="https://wa.me/51981256282" target="_blank" rel="noopener">Consultar</a>
-      </div>
-      <div class="card">
-        <h3>Máquina Industrial C</h3>
-        <p>Precio: Consultar</p>
-        <a href="https://wa.me/51981256282" target="_blank" rel="noopener">Consultar</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section>
-  <div class="grid">
-    <h2>Contacto</h2>
-    <div class="cards" style="grid-template-columns:1fr; max-width:700px; margin:auto;">
-      <div class="card">
-        <strong style="font-size:18px; letter-spacing:1.5px;">MAQUINARIAS SEBASTIAN E.I.R.L.</strong><br><br>
-        RUC: 20607164437<br>
-        Av. Ferrocarril Mz. D1 Lt. 9<br>
-        Las Praderas – Santa Anita<br><br>
-        📧 maquinariasmscaltex@gmail.com<br>
-        📱 +51 981 256 282
-        <p style="margin-top:30px; font-size:22px; font-weight:800; letter-spacing:3px; color:#c7f9cc;">
-          INGENIERÍA APLICADA A TU NEGOCIO
-        </p>
+      <!-- MAQUINA 3 -->
+      <div class="machine-card reveal reveal-delay-3">
+        <div class="machine-img-wrapper">
+          <div class="machine-img-placeholder"><i class="fas fa-cog"></i></div>
+          <div class="machine-badge">Próximamente</div>
+        </div>
+        <div class="machine-body">
+          <h3>Máquina Industrial C</h3>
+          <ul class="machine-features">
+            <li><i class="fas fa-check"></i> Especificaciones en desarrollo</li>
+            <li><i class="fas fa-check"></i> Diseño industrial de nueva generación</li>
+            <li><i class="fas fa-check"></i> Consultar disponibilidad</li>
+            <li><i class="fas fa-check"></i> Precio bajo consulta</li>
+          </ul>
+          <a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="machine-cta">
+            <i class="fab fa-whatsapp"></i> Consultar Precio
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<a class="whatsapp" href="https://wa.me/51981256282" target="_blank" rel="noopener">WhatsApp</a>
-<a class="tiktok" href="https://www.tiktok.com/@maquisebastian" target="_blank" rel="noopener">TikTok</a>
+<div class="section-divider"></div>
 
-<footer>© 2026 MAQUINARIAS SEBASTIAN</footer>
+<!-- ═══ CONTACTO ═══ -->
+<section class="section" id="contacto">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-tag"><i class="fas fa-envelope"></i> Hablemos</div>
+      <h2 class="section-title">Contacto</h2>
+      <p class="section-subtitle">Estamos listos para atender tus proyectos de ingeniería industrial.</p>
+    </div>
+
+    <div class="contact-layout reveal">
+      <!-- INFO -->
+      <div class="contact-card">
+        <h3><i class="fas fa-building"></i> Información</h3>
+        <ul class="contact-info-list">
+          <li class="contact-info-item">
+            <div class="contact-info-icon"><i class="fas fa-id-card"></i></div>
+            <div>
+              <div class="contact-info-label">Empresa</div>
+              <div class="contact-info-value">MAQUINARIAS SEBASTIAN E.I.R.L.</div>
+            </div>
+          </li>
+          <li class="contact-info-item">
+            <div class="contact-info-icon"><i class="fas fa-file-invoice"></i></div>
+            <div>
+              <div class="contact-info-label">RUC</div>
+              <div class="contact-info-value">20607164437</div>
+            </div>
+          </li>
+          <li class="contact-info-item">
+            <div class="contact-info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div class="contact-info-label">Dirección</div>
+              <div class="contact-info-value">Av. Ferrocarril Mz. D1 Lt. 9, Las Praderas – Santa Anita</div>
+            </div>
+          </li>
+          <li class="contact-info-item">
+            <div class="contact-info-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="contact-info-label">Correo</div>
+              <div class="contact-info-value">maquinariasmscaltex@gmail.com</div>
+            </div>
+          </li>
+          <li class="contact-info-item">
+            <div class="contact-info-icon"><i class="fas fa-phone-alt"></i></div>
+            <div>
+              <div class="contact-info-label">Teléfono</div>
+              <div class="contact-info-value">+51 981 256 282</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- MAP REAL + REDES -->
+      <div class="contact-card">
+        <h3><i class="fas fa-map-marked-alt"></i> Nuestra Ubicación</h3>
+
+        <!-- GOOGLE MAPS EMBED REAL -->
+        <div class="contact-map-wrapper">
+          <iframe
+            src="https://maps.google.com/maps?q=Las+Praderas,+Santa+Anita,+Lima,+Peru&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            title="Ubicación de Maquinarias Sebastian en Las Praderas, Santa Anita, Lima, Perú"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen>
+          </iframe>
+        </div>
+
+        <div style="margin-bottom:20px;padding:14px 18px;background:rgba(34,197,94,.06);border-radius:12px;border:1px solid rgba(34,197,94,.12);">
+          <div style="font-size:13px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;">Dirección</div>
+          <div style="font-size:15px;font-weight:500;">Av. Ferrocarril Mz. D1 Lt. 9, Las Praderas – Santa Anita, Lima, Perú</div>
+        </div>
+
+        <div class="contact-socials">
+          <a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="social-btn wa">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://www.tiktok.com/@maquisebastian" target="_blank" rel="noopener" class="social-btn tk">
+            <i class="fab fa-tiktok"></i> TikTok
+          </a>
+        </div>
+      </div>
+
+      <!-- FORMULARIO DE CONTACTO -->
+      <div class="contact-card form-card reveal">
+        <h3><i class="fas fa-paper-plane"></i> Envíanos un Mensaje</h3>
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-group">
+            <label for="formName">Nombre completo <span>*</span></label>
+            <input type="text" id="formName" class="form-input" placeholder="Ej: Juan Pérez" required>
+            <div class="form-error" id="errorName">Por favor ingresa tu nombre</div>
+          </div>
+
+          <div class="form-group">
+            <label for="formPhone">Teléfono / WhatsApp <span>*</span></label>
+            <input type="tel" id="formPhone" class="form-input" placeholder="Ej: 981 256 282" required>
+            <div class="form-error" id="errorPhone">Por favor ingresa un número válido</div>
+          </div>
+
+          <div class="form-group">
+            <label for="formEmail">Correo electrónico</label>
+            <input type="email" id="formEmail" class="form-input" placeholder="Ej: tucorreo@gmail.com">
+            <div class="form-error" id="errorEmail">Ingresa un correo válido</div>
+          </div>
+
+          <div class="form-group">
+            <label for="formService">Servicio de interés</label>
+            <select id="formService" class="form-input">
+              <option value="">Seleccionar servicio...</option>
+              <option value="Compra de maquinaria">Compra de maquinaria</option>
+              <option value="Mantenimiento industrial">Mantenimiento industrial</option>
+              <option value="Diseño y fabricación">Diseño y fabricación a medida</option>
+              <option value="Proyecto electroneumático">Proyecto electroneumático</option>
+              <option value="Proyecto hidráulico">Proyecto hidráulico</option>
+              <option value="Montaje industrial">Montaje industrial</option>
+              <option value="Otro">Otro</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="formMessage">Tu mensaje <span>*</span></label>
+            <textarea id="formMessage" class="form-input" placeholder="Describe brevemente tu proyecto o consulta..." required></textarea>
+            <div class="form-error" id="errorMessage">Por favor escribe tu mensaje</div>
+          </div>
+
+          <div class="form-submit-row">
+            <button type="submit" class="form-submit-btn" id="formSubmitBtn">
+              <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            </button>
+            <span class="form-hint"><i class="fas fa-lock"></i> Tu información es 100% privada</span>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FLOAT WHATSAPP ═══ -->
+<a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="float-wa" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">Maquinarias Sebastian</div>
+  <div class="footer-tagline">Ingeniería Aplicada a Tu Negocio</div>
+  <div class="footer-links">
+    <a href="#servicios">Servicios</a>
+    <a href="#elegirnos">Nosotros</a>
+    <a href="#sobre-mi">Sobre mí</a>
+    <a href="#maquinas">Máquinas</a>
+    <a href="#contacto">Contacto</a>
+    <a href="https://wa.me/51981256282" target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+  <div class="footer-copy">© 2026 MAQUINARIAS SEBASTIAN E.I.R.L. — Todos los derechos reservados.</div>
+</footer>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+(function() {
+  "use strict";
+
+  /* ─── NAVBAR SCROLL ─── */
+  var navbar = document.getElementById("navbar");
+
+  window.addEventListener("scroll", function() {
+    if (window.scrollY > 80) {
+      navbar.classList.add("scrolled");
+    } else {
+      navbar.classList.remove("scrolled");
+    }
+  });
+
+  /* ─── MOBILE NAV TOGGLE ─── */
+  var navToggle = document.getElementById("navToggle");
+  var navLinks = document.getElementById("navLinks");
+
+  navToggle.addEventListener("click", function() {
+    navLinks.classList.toggle("open");
+    var icon = navToggle.querySelector("i");
+    icon.classList.toggle("fa-bars");
+    icon.classList.toggle("fa-times");
+  });
+
+  navLinks.querySelectorAll("a").forEach(function(link) {
+    link.addEventListener("click", function() {
+      navLinks.classList.remove("open");
+      var icon = navToggle.querySelector("i");
+      icon.classList.add("fa-bars");
+      icon.classList.remove("fa-times");
+    });
+  });
+
+  /* ─── HERO PARTICLES ─── */
+  var particlesContainer = document.getElementById("heroParticles");
+  for (var i = 0; i < 30; i++) {
+    var particle = document.createElement("div");
+    particle.className = "particle";
+    particle.style.left = Math.random() * 100 + "%";
+    particle.style.animationDelay = Math.random() * 8 + "s";
+    particle.style.animationDuration = (6 + Math.random() * 6) + "s";
+    particle.style.width = (2 + Math.random() * 3) + "px";
+    particle.style.height = particle.style.width;
+    particlesContainer.appendChild(particle);
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  var reveals = document.querySelectorAll(".reveal");
+
+  function checkReveal() {
+    var windowHeight = window.innerHeight;
+    reveals.forEach(function(el) {
+      var top = el.getBoundingClientRect().top;
+      if (top < windowHeight - 80) {
+        el.classList.add("visible");
+      }
+    });
+  }
+
+  window.addEventListener("scroll", checkReveal);
+  window.addEventListener("load", checkReveal);
+  checkReveal();
+
+  /* ─── COUNTER ANIMATION ─── */
+  var countersStarted = false;
+
+  function animateCounters() {
+    if (countersStarted) return;
+    var statsBar = document.querySelector(".stats-bar");
+    if (!statsBar) return;
+    var rect = statsBar.getBoundingClientRect();
+    if (rect.top >= window.innerHeight) return;
+
+    countersStarted = true;
+    var counters = document.querySelectorAll(".stat-number[data-target]");
+
+    counters.forEach(function(counter) {
+      var target = parseInt(counter.getAttribute("data-target"), 10);
+      var duration = 2000;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.floor(eased * target);
+        counter.textContent = current + "+";
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          counter.textContent = target + "+";
+        }
+      }
+
+      requestAnimationFrame(step);
+    });
+  }
+
+  window.addEventListener("scroll", animateCounters);
+  window.addEventListener("load", animateCounters);
+
+  /* ─── ACTIVE NAV LINK ─── */
+  var sections = document.querySelectorAll("section[id]");
+
+  function highlightNav() {
+    var scrollY = window.scrollY + 200;
+    sections.forEach(function(section) {
+      var id = section.getAttribute("id");
+      var top = section.offsetTop;
+      var height = section.offsetHeight;
+      var link = document.querySelector('.nav-links a[href="#' + id + '"]');
+      if (link) {
+        if (scrollY >= top && scrollY < top + height) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      }
+    });
+  }
+
+  window.addEventListener("scroll", highlightNav);
+
+  /* ─── TOAST SYSTEM ─── */
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+
+  function showToast(message, type) {
+    if (toastTimer) clearTimeout(toastTimer);
+    toastEl.textContent = message;
+    toastEl.className = "toast " + type;
+    // Force reflow
+    void toastEl.offsetWidth;
+    toastEl.classList.add("show");
+    toastTimer = setTimeout(function() {
+      toastEl.classList.remove("show");
+    }, 4000);
+  }
+
+  /* ─── CONTACT FORM ─── */
+  var contactForm = document.getElementById("contactForm");
+  var formName = document.getElementById("formName");
+  var formPhone = document.getElementById("formPhone");
+  var formEmail = document.getElementById("formEmail");
+  var formService = document.getElementById("formService");
+  var formMessage = document.getElementById("formMessage");
+
+  function setError(input, errorId, show) {
+    var errorEl = document.getElementById(errorId);
+    if (show) {
+      input.classList.add("error");
+      errorEl.classList.add("show");
+    } else {
+      input.classList.remove("error");
+      errorEl.classList.remove("show");
+    }
+  }
+
+  // Clear errors on input
+  formName.addEventListener("input", function() { setError(formName, "errorName", false); });
+  formPhone.addEventListener("input", function() { setError(formPhone, "errorPhone", false); });
+  formEmail.addEventListener("input", function() { setError(formEmail, "errorEmail", false); });
+  formMessage.addEventListener("input", function() { setError(formMessage, "errorMessage", false); });
+
+  contactForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    var valid = true;
+    var name = formName.value.trim();
+    var phone = formPhone.value.trim();
+    var email = formEmail.value.trim();
+    var service = formService.value;
+    var message = formMessage.value.trim();
+
+    // Validate name
+    if (name.length < 2) {
+      setError(formName, "errorName", true);
+      valid = false;
+    }
+
+    // Validate phone
+    var phoneClean = phone.replace(/[\s\-\+\(\)]/g, "");
+    if (phoneClean.length < 6 || !/^\d+$/.test(phoneClean)) {
+      setError(formPhone, "errorPhone", true);
+      valid = false;
+    }
+
+    // Validate email (optional)
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError(formEmail, "errorEmail", true);
+      valid = false;
+    }
+
+    // Validate message
+    if (message.length < 5) {
+      setError(formMessage, "errorMessage", true);
+      valid = false;
+    }
+
+    if (!valid) {
+      showToast("Por favor corrige los campos marcados en rojo", "error-toast");
+      return;
+    }
+
+    // Build WhatsApp message
+    var waText = "Hola, me contacto desde su página web.%0A%0A";
+    waText += "*Nombre:* " + encodeURIComponent(name) + "%0A";
+    waText += "*Teléfono:* " + encodeURIComponent(phone) + "%0A";
+    if (email) {
+      waText += "*Correo:* " + encodeURIComponent(email) + "%0A";
+    }
+    if (service) {
+      waText += "*Servicio:* " + encodeURIComponent(service) + "%0A";
+    }
+    waText += "%0A*Mensaje:*%0A" + encodeURIComponent(message);
+
+    var waUrl = "https://wa.me/51981256282?text=" + waText;
+
+    showToast("Redirigiendo a WhatsApp...", "success");
+
+    setTimeout(function() {
+      window.open(waUrl, "_blank");
+    }, 600);
+
+    // Reset form
+    contactForm.reset();
+  });
+
+})();
+</script>
 
 </body>
 </html>
+
