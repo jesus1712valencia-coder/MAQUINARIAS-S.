@@ -775,6 +775,10 @@ body::before {
   transform: scale(1.05);
 }
 
+.machine-clickable-image {
+  cursor: zoom-in;
+}
+
 .machine-img-placeholder {
   font-size: 64px;
   color: var(--text-muted);
@@ -853,6 +857,48 @@ body::before {
   background: var(--accent);
   color: #022c22;
   border-color: var(--accent);
+}
+
+.machine-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  background: rgba(3, 7, 14, .85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.machine-modal.show {
+  display: flex;
+}
+
+.machine-modal-content {
+  max-width: min(1100px, 92vw);
+  max-height: 84vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 22px 70px rgba(0,0,0,.55);
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.machine-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(255,255,255,.14);
+  font-size: 22px;
+}
+
+.machine-modal-close:hover {
+  background: rgba(255,255,255,.24);
 }
 
 /* ═══════════════════════════════════════════
@@ -1595,7 +1641,7 @@ textarea.form-input {
       <!-- MAQUINA 1 -->
       <div class="machine-card reveal reveal-delay-1">
         <div class="machine-img-wrapper">
-          <img src="repuestos.JPG" alt="Repuestos" loading="lazy">
+          <img src="repuestos.JPG" alt="Repuestos" loading="lazy" class="machine-clickable-image" data-full="repuestos.JPG">
           <div class="machine-badge">Galería (6 imágenes)</div>
         </div>
         <div class="machine-body">
@@ -1604,6 +1650,8 @@ textarea.form-input {
             <li><i class="fas fa-check"></i> Componentes y recambios industriales</li>
             <li><i class="fas fa-check"></i> Soluciones para mantenimiento de maquinaria</li>
             <li><i class="fas fa-check"></i> Selección técnica según requerimiento</li>
+            <li><i class="fas fa-check"></i> Compatibilidad con equipos de distintas marcas</li>
+            <li><i class="fas fa-check"></i> Asesoría para reemplazo y mejora de piezas</li>
             <li><i class="fas fa-check"></i> Galería de 6 imágenes</li>
           </ul>
           <a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="machine-cta">
@@ -1615,7 +1663,7 @@ textarea.form-input {
       <!-- MAQUINA 2 -->
       <div class="machine-card reveal reveal-delay-2">
         <div class="machine-img-wrapper">
-          <img src="soporte tecnico.JPG" alt="Soporte técnico" loading="lazy">
+          <img src="soporte tecnico.JPG" alt="Soporte técnico" loading="lazy" class="machine-clickable-image" data-full="soporte tecnico.JPG">
           <div class="machine-badge">Galería (6 imágenes)</div>
         </div>
         <div class="machine-body">
@@ -1624,6 +1672,8 @@ textarea.form-input {
             <li><i class="fas fa-check"></i> Diagnóstico y solución de fallas</li>
             <li><i class="fas fa-check"></i> Mantenimiento correctivo y preventivo</li>
             <li><i class="fas fa-check"></i> Asistencia técnica especializada</li>
+            <li><i class="fas fa-check"></i> Evaluación de tableros y sistemas eléctricos</li>
+            <li><i class="fas fa-check"></i> Atención técnica para planta y taller</li>
             <li><i class="fas fa-check"></i> Galería de 6 imágenes</li>
           </ul>
           <a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="machine-cta">
@@ -1635,7 +1685,7 @@ textarea.form-input {
       <!-- MAQUINA 3 -->
       <div class="machine-card reveal reveal-delay-3">
         <div class="machine-img-wrapper">
-          <img src="maquinas.JPG" alt="Máquinas - importación y fabricación de máquinas" loading="lazy">
+          <img src="maquinas.JPG" alt="Máquinas - importación y fabricación de máquinas" loading="lazy" class="machine-clickable-image" data-full="maquinas.JPG">
           <div class="machine-badge">Galería (6 imágenes)</div>
         </div>
         <div class="machine-body">
@@ -1644,6 +1694,8 @@ textarea.form-input {
             <li><i class="fas fa-check"></i> Importación de maquinaria industrial</li>
             <li><i class="fas fa-check"></i> Fabricación según necesidad del cliente</li>
             <li><i class="fas fa-check"></i> Integración y puesta en operación</li>
+            <li><i class="fas fa-check"></i> Automatización y mejora de productividad</li>
+            <li><i class="fas fa-check"></i> Configuración para producción continua</li>
             <li><i class="fas fa-check"></i> Galería de 6 imágenes</li>
           </ul>
           <a href="https://wa.me/51981256282" target="_blank" rel="noopener" class="machine-cta">
@@ -1799,6 +1851,12 @@ textarea.form-input {
   <i class="fab fa-whatsapp"></i>
 </a>
 
+<!-- IMAGE MODAL -->
+<div class="machine-modal" id="machineModal" aria-hidden="true">
+  <button class="machine-modal-close" id="machineModalClose" aria-label="Cerrar vista">&times;</button>
+  <img src="" alt="Vista ampliada" class="machine-modal-content" id="machineModalImage">
+</div>
+
 <!-- TOAST NOTIFICATION -->
 <div class="toast" id="toast"></div>
 
@@ -1942,6 +2000,51 @@ textarea.form-input {
   }
 
   window.addEventListener("scroll", highlightNav);
+
+  /* ─── IMAGE MODAL ─── */
+  var machineModal = document.getElementById("machineModal");
+  var machineModalImage = document.getElementById("machineModalImage");
+  var machineModalClose = document.getElementById("machineModalClose");
+  var clickableMachineImages = document.querySelectorAll(".machine-clickable-image");
+
+  function openMachineModal(src, alt) {
+    if (!machineModal || !machineModalImage) return;
+    machineModalImage.src = src;
+    machineModalImage.alt = alt || "Vista ampliada";
+    machineModal.classList.add("show");
+    machineModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMachineModal() {
+    if (!machineModal || !machineModalImage) return;
+    machineModal.classList.remove("show");
+    machineModal.setAttribute("aria-hidden", "true");
+    machineModalImage.src = "";
+    document.body.style.overflow = "";
+  }
+
+  clickableMachineImages.forEach(function(img) {
+    img.addEventListener("click", function() {
+      openMachineModal(img.getAttribute("data-full") || img.getAttribute("src"), img.getAttribute("alt"));
+    });
+  });
+
+  if (machineModalClose) {
+    machineModalClose.addEventListener("click", closeMachineModal);
+  }
+
+  if (machineModal) {
+    machineModal.addEventListener("click", function(e) {
+      if (e.target === machineModal) closeMachineModal();
+    });
+  }
+
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && machineModal && machineModal.classList.contains("show")) {
+      closeMachineModal();
+    }
+  });
 
   /* ─── TOAST SYSTEM ─── */
   var toastEl = document.getElementById("toast");
