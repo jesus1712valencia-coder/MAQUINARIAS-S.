@@ -915,6 +915,62 @@ body::before {
 }
 
 /* ═══════════════════════════════════════════
+   ALTA FRECUENCIA & CABINA DE PINTURA
+   ═══════════════════════════════════════════ */
+.catalog-extra-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+.catalog-extra-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  transition: var(--transition);
+}
+
+.catalog-extra-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-hover);
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
+
+.catalog-extra-card h3 {
+  font-family: var(--font-heading);
+  font-size: 26px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.catalog-extra-card p {
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  font-size: 15px;
+}
+
+.catalog-extra-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.catalog-extra-images img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.08);
+  transition: var(--transition);
+}
+
+.catalog-extra-images img:hover {
+  transform: scale(1.03);
+  border-color: rgba(34,197,94,.4);
+}
+
+/* ═══════════════════════════════════════════
    CONTACTO
    ═══════════════════════════════════════════ */
 .contact-layout {
@@ -1353,7 +1409,8 @@ textarea.form-input {
   .stat-item:nth-child(2)::after { display: none; }
 
   .services-grid,
-  .machines-grid { grid-template-columns: 1fr; }
+  .machines-grid,
+  .catalog-extra-grid { grid-template-columns: 1fr; }
 
   .contact-layout { grid-template-columns: 1fr; }
   .form-card { grid-column: auto; }
@@ -1738,6 +1795,47 @@ textarea.form-input {
           </a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══ ALTA FRECUENCIA & CABINA DE PINTURA ═══ -->
+<section class="section" id="procesos-especiales">
+  <div class="section-container">
+    <div class="section-header reveal">
+      <div class="section-tag"><i class="fas fa-microchip"></i> Procesos especiales</div>
+      <h2 class="section-title">Alta Frecuencia y Cabina de Pintura</h2>
+      <p class="section-subtitle">Equipamiento especializado para producción, acabado y mejora del rendimiento industrial.</p>
+    </div>
+
+    <div class="catalog-extra-grid">
+      <article class="catalog-extra-card reveal reveal-delay-1">
+        <h3>Alta Frecuencia</h3>
+        <p>
+          Soluciones de alta frecuencia para procesos de sellado, activación y trabajo técnico en producción industrial.
+          Diseñado para operación continua, estabilidad eléctrica y precisión en cada ciclo.
+        </p>
+        <div class="catalog-extra-images">
+          <img src="alta frecuencia.jpg" alt="Equipo de alta frecuencia - vista 1" loading="lazy" decoding="async">
+          <img src="alta frecuencia2.JPG" alt="Equipo de alta frecuencia - vista 2" loading="lazy" decoding="async">
+          <img src="alta frecuencia 3.JPG" alt="Equipo de alta frecuencia - vista 3" loading="lazy" decoding="async">
+        </div>
+      </article>
+
+      <article class="catalog-extra-card reveal reveal-delay-2">
+        <h3>Cabina de Pintura</h3>
+        <p>
+          Cabina de pintura para acabados uniformes, control de partículas y mejor calidad de terminación en piezas.
+          Ideal para entornos industriales que requieren acabados profesionales y repetibles.
+        </p>
+        <div class="catalog-extra-images">
+          <img src="cabina de pintura.JPG" alt="Cabina de pintura - vista 1" loading="lazy" decoding="async">
+          <img src="cabina de pintura2.JPG" alt="Cabina de pintura - vista 2" loading="lazy" decoding="async">
+          <img src="cabina de pintura3.jpeg" alt="Cabina de pintura - vista 3" loading="lazy" decoding="async">
+        </div>
+      </article>
     </div>
   </div>
 </section>
