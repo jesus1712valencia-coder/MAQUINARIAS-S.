@@ -921,6 +921,8 @@ body::before {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 28px;
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
 }
 
 .catalog-extra-card {
@@ -928,13 +930,14 @@ body::before {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 24px;
-  transition: var(--transition);
+  transition: border-color .2s ease, box-shadow .2s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 360px;
 }
 
 .catalog-extra-card:hover {
-  transform: translateY(-6px);
   border-color: var(--border-hover);
-  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  box-shadow: 0 10px 28px rgba(0,0,0,.3);
 }
 
 .catalog-extra-card h3 {
@@ -954,6 +957,8 @@ body::before {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  content-visibility: auto;
+  contain-intrinsic-size: 300px;
 }
 
 .catalog-extra-images img {
@@ -962,11 +967,10 @@ body::before {
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,.08);
-  transition: var(--transition);
+  transition: border-color .16s ease;
 }
 
 .catalog-extra-images img:hover {
-  transform: scale(1.03);
   border-color: rgba(34,197,94,.4);
 }
 
@@ -1885,6 +1889,38 @@ textarea.form-input {
           <i class="fab fa-whatsapp"></i> Consultar por Armadura de Punta y Talón
         </a>
       </article>
+
+      <article class="catalog-extra-card reveal reveal-delay-1">
+        <h3>Dobladora</h3>
+        <p>
+          Dobladora industrial para conformado preciso de piezas, con operación estable y repetible para procesos continuos.
+          Ideal para producción que exige acabados uniformes y alta productividad.
+        </p>
+        <div class="catalog-extra-images">
+          <img src="dobladora.JPG" alt="Dobladora - vista 1" loading="lazy" decoding="async" width="360" height="360" class="machine-clickable-image" data-full="dobladora.JPG">
+          <img src="dobladora2.JPG" alt="Dobladora - vista 2" loading="lazy" decoding="async" width="360" height="360" class="machine-clickable-image" data-full="dobladora2.JPG">
+          <img src="dobladora3.JPG" alt="Dobladora - vista 3" loading="lazy" decoding="async" width="360" height="360" class="machine-clickable-image" data-full="dobladora3.JPG">
+        </div>
+        <a href="https://wa.me/51928473744" target="_blank" rel="noopener" class="machine-cta catalog-extra-cta">
+          <i class="fab fa-whatsapp"></i> Consultar por Dobladora
+        </a>
+      </article>
+
+      <article class="catalog-extra-card reveal reveal-delay-2">
+        <h3>Divisora de Cuero</h3>
+        <p>
+          Divisora de cuero para calibrado uniforme de espesor y mejor aprovechamiento del material en líneas de fabricación.
+          Permite mayor precisión de trabajo y consistencia en resultados finales.
+        </p>
+        <div class="catalog-extra-images">
+          <img src="divisora de cuero.jpg" alt="Divisora de cuero - vista 1" loading="lazy" decoding="async" width="360" height="360" class="machine-clickable-image" data-full="divisora de cuero.jpg">
+          <img src="divisora de cuero2.JPG" alt="Divisora de cuero - vista 2" loading="lazy" decoding="async" width="360" height="360" class="machine-clickable-image" data-full="divisora de cuero2.JPG">
+          <img src="divisora de cuero3.JPG" alt="Divisora de cuero - vista 3" loading="lazy" decoding="async" width="360" height="360" class="machine-clickable-image" data-full="divisora de cuero3.JPG">
+        </div>
+        <a href="https://wa.me/51928473744" target="_blank" rel="noopener" class="machine-cta catalog-extra-cta">
+          <i class="fab fa-whatsapp"></i> Consultar por Divisora de Cuero
+        </a>
+      </article>
     </div>
   </div>
 </section>
@@ -2095,7 +2131,7 @@ textarea.form-input {
 
   /* ─── HERO PARTICLES ─── */
   var particlesContainer = document.getElementById("heroParticles");
-  for (var i = 0; i < 30; i++) {
+  for (var i = 0; i < 14; i++) {
     var particle = document.createElement("div");
     particle.className = "particle";
     particle.style.left = Math.random() * 100 + "%";
@@ -2187,7 +2223,6 @@ textarea.form-input {
   var machineModal = document.getElementById("machineModal");
   var machineModalImage = document.getElementById("machineModalImage");
   var machineModalClose = document.getElementById("machineModalClose");
-  var clickableMachineImages = document.querySelectorAll(".machine-clickable-image");
 
   function openMachineModal(src, alt) {
     if (!machineModal || !machineModalImage) return;
@@ -2206,10 +2241,10 @@ textarea.form-input {
     document.body.style.overflow = "";
   }
 
-  clickableMachineImages.forEach(function(img) {
-    img.addEventListener("click", function() {
-      openMachineModal(img.getAttribute("data-full") || img.getAttribute("src"), img.getAttribute("alt"));
-    });
+  document.addEventListener("click", function(e) {
+    var img = e.target.closest(".machine-clickable-image");
+    if (!img) return;
+    openMachineModal(img.getAttribute("data-full") || img.getAttribute("src"), img.getAttribute("alt"));
   });
 
   if (machineModalClose) {
@@ -2338,4 +2373,3 @@ textarea.form-input {
 
 </body>
 </html>
-
